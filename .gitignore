@@ -1,8 +1,7 @@
 .env
 node_modules/
+dist/
 
 package-lock.json
-index.js
 
-//skip all .js file
-!*.js
+
