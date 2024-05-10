@@ -5,17 +5,10 @@
 
 import { chromium, Page } from "@playwright/test";
 import * as dotenv from "dotenv";
+import { createReachoutMessage } from "./constants/template";
 // const chromium = require('playwright').chromium;
 
 dotenv.config();
-
-const TEMPLATE: string = `Hello {PersonName},
-Hope you are doing good. I am writing to inquire about the software internship program at {companyName}. I am interested in applying to it, and it would be great help if you can guide me how I should proceed forward.
-
-Thanks,
-Anish Hegde
-Resume : https://shorturl.at/bMP13
-`;
 
 const USER_NAME: string = process.env.USER_NAME ?? "";
 const PASSWORD: string = process.env.PASSWORD ?? "";
@@ -31,7 +24,7 @@ function sleep(ms: number): Promise<void> {
 
 const Login = async (page: Page) => {
   await page.fill("id=session_key", USER_NAME);
-  await page.fill("id=session_password", USER_NAME);
+  await page.fill("id=session_password", PASSWORD);
   await page.click('button:has-text("Sign in")');
 };
 
@@ -64,8 +57,10 @@ async function searchPerson(
   page: Page,
   personObject: PersonObject
 ): Promise<void> {
-  let message: string = TEMPLATE.replace("{PersonName}", personObject.name);
-  message = message.replace("{companyName}", personObject.companyName);
+  const message: string = createReachoutMessage(
+    personObject.name,
+    personObject.companyName
+  );
 
   console.log(message);
 
