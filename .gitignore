@@ -3,3 +3,6 @@ node_modules/
 
 package-lock.json
 index.js
+
+//skip all .js file
+!*.js
